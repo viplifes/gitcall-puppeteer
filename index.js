@@ -25,25 +25,9 @@ const puppeteer = require('puppeteer');
 
 (async () => {
 
-   console.log(123);
   const browser = await puppeteer.launch({headless: true});
   const page = await browser.newPage();
-
-  await page.goto('https://developers.google.com/web/');
-
-  // Type into search box.
-  await page.type('.devsite-search-field', 'Headless Chrome');
-
-  // Wait for suggest overlay to appear and click "show all results".
-  const allResultsSelector = '.devsite-suggest-all-results';
-  await page.waitForSelector(allResultsSelector);
-  await page.click(allResultsSelector);
-
-  // Wait for the results page to load and display the results.
-  const resultsSelector = '.gsc-results .gs-title';
-  await page.waitForSelector(resultsSelector);
-
-   console.log(456);
+  await page.goto('https://en.wikipedia.org/wiki/Main_Page');
   // Extract the results from the page.
   const links = await page.evaluate(resultsSelector => {
     const anchors = Array.from(document.querySelectorAll(resultsSelector));
@@ -51,9 +35,8 @@ const puppeteer = require('puppeteer');
       const title = anchor.textContent.split('|')[0].trim();
       return `${title} - ${anchor.href}`;
     });
-  }, resultsSelector);
+  }, 'a');
 
-   console.log(5);
   console.log(links.join('\n'));
 
   await browser.close();
