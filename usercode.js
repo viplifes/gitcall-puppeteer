@@ -8,9 +8,15 @@ module.exports = (data) => {
   });
 };
 
+ var browser;
+
 async function run(data, resolve) {
 
-      const browser = await puppeteer.launch({headless: true});
+    if(!browser){
+       browser = await puppeteer.launch({headless: true});
+    }
+
+     // const browser = await puppeteer.launch({headless: true});
       const page = await browser.newPage();
 
       await page.goto('https://developers.google.com/web/');
