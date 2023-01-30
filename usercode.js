@@ -31,5 +31,4 @@ async function run(data, resolve) {
        data.links = links;
        resolve(data);
 
-      await browser.close();
 }
